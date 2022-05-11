@@ -9,22 +9,25 @@ const Testimonials = () => {
     const reviews = [
       {
         _id: 1,
-        name: "John Doe",
-        review: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi labore, ab excepturi illo itaque doloribus.",
+        name: "Larry Page",
+        review:
+          "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi labore, ab excepturi illo itaque doloribus.",
         location: "California",
         img: people2,
       },
       {
         _id: 2,
-        name: "Larry Page",
-        review: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi labore, ab excepturi illo itaque doloribus.",
+        name: "John Doe",
+        review:
+          "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi labore, ab excepturi illo itaque doloribus.",
         location: "Washington",
         img: people1,
       },
       {
         _id: 3,
         name: "Jeremy Taylor",
-        review: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi labore, ab excepturi illo itaque doloribus.",
+        review:
+          "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi labore, ab excepturi illo itaque doloribus.",
         location: "California",
         img: people3,
       },
