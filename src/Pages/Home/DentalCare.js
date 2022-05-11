@@ -1,9 +1,10 @@
 import React from 'react';
 import treatment from "../../assets/images/treatment.png"
+import PrimaryButton from '../Shared/PrimaryButton';
 
 const DentalCare = () => {
     return (
-      <div class="hero min-h-screen px-10">
+      <div class="hero min-h-screen px-1 pb-24">
         <div class="hero-content flex-col lg:flex-row gap-12">
           <img src={treatment} class="max-w-sm rounded-lg shadow-2xl" alt="" />
           <div>
@@ -17,9 +18,7 @@ const DentalCare = () => {
               itaque repudiandae inventore totam animi distinctio quo! Rem
               numquam deserunt repudiandae sunt, voluptate ullam!
             </p>
-            <button class="btn btn-primary uppercase text-white bg-gradient-to-r from-secondary to-primary text-lg">
-              Get Started
-            </button>
+            <PrimaryButton>Get Started</PrimaryButton>
           </div>
         </div>
       </div>
