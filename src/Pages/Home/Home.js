@@ -1,9 +1,11 @@
 import React from "react";
-import Appoinment from "./Appoinment";
+import Appointment from "./Appointment";
 import Banner from "./Banner";
+import Contact from "./Contact";
 import DentalCare from "./DentalCare";
 import Info from './Info';
 import Services from "./Services";
+import Testimonials from "./Testimonials";
 
 const Home = () => {
   return (
@@ -12,7 +14,9 @@ const Home = () => {
           <Info />
           <Services />
           <DentalCare />
-          <Appoinment/>
+          <Appointment />
+          <Testimonials />
+          <Contact/>
     </div>
   );
 };
