@@ -1,64 +1,92 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
-  useSignInWithEmailAndPassword,
+  useCreateUserWithEmailAndPassword,
   useSignInWithGoogle,
+  useUpdateProfile,
 } from "react-firebase-hooks/auth";
-import auth from "./../firebase.init";
+import auth from "../firebase.init";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate, useLocation } from "react-router-dom";
-import Loading from './../Pages/Shared/Loading';
+import Loading from "./../Pages/Shared/Loading";
+import { Link, useNavigate } from "react-router-dom";
 
-const Login = () => {
+const SignUp = () => {
   const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
-  const [signInWithEmailAndPassword, user, loading, error] =
-    useSignInWithEmailAndPassword(auth);
+  const [createUserWithEmailAndPassword, user, loading, error] =
+    useCreateUserWithEmailAndPassword(auth);
+
+  const [updateProfile, updating, updateError] = useUpdateProfile(auth);
+
+  const navigate = useNavigate();
 
   let signInError;
-  const navigate = useNavigate();
-  const location = useLocation();
-  let from = location.state?.from?.pathname || "/";
 
-  useEffect(() => {
-    if (user || gUser) {
-      navigate(from, { replace: true });
-    }
-  }, [user, gUser, from, navigate]);
-
-  if (loading || gLoading) {
-    return <Loading/>;
+  if (loading || gLoading || updating) {
+    return <Loading></Loading>;
   }
 
-  if (error || gError) {
+  if (error || gError || updateError) {
     signInError = (
       <p className="text-red-500">
-        <small>{error?.message || gError?.message}</small>
+        <small>
+          {error?.message || gError?.message || updateError?.message}
+        </small>
       </p>
     );
   }
 
-  const onSubmit = (data) => {
-    signInWithEmailAndPassword(data.email, data.password);
-  };
+  if (user || gUser) {
+    console.log(user || gUser);
+  }
 
+  const onSubmit = async (data) => {
+    await createUserWithEmailAndPassword(data.email, data.password);
+    await updateProfile({ displayName: data.name });
+    console.log("update done");
+    navigate("/appointment");
+  };
   return (
     <div className="flex h-screen justify-center items-center">
       <div className="card w-96 bg-base-100 shadow-xl">
         <div className="card-body">
-          <h2 className="text-center text-3xl font-serif font-bold">Log In</h2>
+          <h2 className="text-center text-2xl font-bold">Sign Up</h2>
           <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="form-control w-full max-w-xs">
+              <label className="label">
+                <span className="label-text text-lg">Name</span>
+              </label>
+              <input
+                type="text"
+                placeholder="Your Name"
+                className="input input-bordered w-full max-w-xs text-lg"
+                {...register("name", {
+                  required: {
+                    value: true,
+                    message: "Name is Required",
+                  },
+                })}
+              />
+              <label className="label">
+                {errors.name?.type === "required" && (
+                  <span className="label-text-alt text-red-500">
+                    {errors.name.message}
+                  </span>
+                )}
+              </label>
+            </div>
+
             <div className="form-control w-full max-w-xs">
               <label className="label">
                 <span className="label-text text-lg">Email</span>
               </label>
               <input
                 type="email"
-                placeholder="Enter Your Email"
-                className="input input-bordered w-full text-lg max-w-xs"
+                placeholder="Your Email"
+                className="input input-bordered w-full max-w-xs text-lg"
                 {...register("email", {
                   required: {
                     value: true,
@@ -89,8 +117,8 @@ const Login = () => {
               </label>
               <input
                 type="password"
-                placeholder="Enter Your Password"
-                className="input input-bordered w-full text-lg max-w-xs"
+                placeholder="Password"
+                className="input input-bordered w-full max-w-xs text-lg"
                 {...register("password", {
                   required: {
                     value: true,
@@ -98,7 +126,7 @@ const Login = () => {
                   },
                   minLength: {
                     value: 6,
-                    message: "Password should more than 5 characters",
+                    message: "Must be 6 characters or longer",
                   },
                 })}
               />
@@ -118,25 +146,23 @@ const Login = () => {
 
             {signInError}
             <input
-              className="btn btn-secondary text-lg w-full max-w-xs text-white"
+              className="btn btn-secondary w-full  text-lg max-w-xs text-white"
               type="submit"
-              value="Login"
+              value="Sign Up"
             />
           </form>
-          <p>
-            <p className="text-center">
-              New To Doctors Portal?{" "}
-              <Link className="text-secondary underline" to="/signup">
-                Create New Account
-              </Link>
-            </p>
+          <p className="text-center">
+            Already have an account?{" "}
+            <Link className="text-secondary underline" to="/login">
+              Please login
+            </Link>
           </p>
           <div className="divider">OR</div>
           <button
             onClick={() => signInWithGoogle()}
             className="btn btn-outline btn-secondary text-lg"
           >
-            Login With Google
+            SignUp With Google
           </button>
         </div>
       </div>
@@ -144,4 +170,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SignUp;

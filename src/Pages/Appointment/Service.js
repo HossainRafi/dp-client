@@ -22,7 +22,7 @@ const Service = ({ service, setTreatment }) => {
         </p>
         <div className="card-actions pt-5 flex justify-center">
           <label
-            for="booking-modal"
+            htmlFor="booking-modal"
             onClick={() => setTreatment(service)}
             disabled={slots.length === 0}
             className="btn btn-sm text-white bg-gradient-to-r from-secondary to-primary text-lg"
