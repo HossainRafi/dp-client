@@ -30,11 +30,13 @@ const Navbar = () => {
       </li>
       <li>
         {user ? (
-          <button className="btn btn-ghost" onClick={logout}>
+          <button className="btn btn-outline" onClick={logout}>
             LogOut
           </button>
         ) : (
-          <Link to="/login">Login</Link>
+          <Link className="btn btn-outline" to="/login">
+            Login
+          </Link>
         )}
       </li>
     </>

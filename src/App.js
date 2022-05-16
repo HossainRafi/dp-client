@@ -7,6 +7,7 @@ import AppointmentPage from "./Pages/Appointment/AppointmentPage";
 import SignUp from './Login/SignUp';
 import RequireAuth from "./Login/RequireAuth";
 
+import{ Toaster } from "react-hot-toast";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path="login" element={<Login />} />
         <Route path="signup" element={<SignUp />} />
       </Routes>
+      <Toaster />
     </div>
   );
 }
